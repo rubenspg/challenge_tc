@@ -1,13 +1,10 @@
 Rails.application.routes.draw do
-  scope :api do
-    scope :v1 do
-      devise_for :users do
-        resources :events do
-          resources :guests
+  namespace :api, path: '', defaults: {format: 'json'} do
+    namespace :v1 do
+      resources :users, only: [:index, :create, :show, :update, :destroy] do
+        resources :events, only: [:index, :create, :show, :update, :destroy] do
+          resources :guests, only: [:index, :create, :show, :update, :destroy]
         end
-      end
-      resources :events do
-        resources :guests
       end
     end
   end
