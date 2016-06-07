@@ -9,13 +9,13 @@ class Api::V1::EventsController < Api::V1::ApiController
 
   def show
     event = Event.find(params[:id])
-    #authorize micropost
+    #authorize event
     respond_with event
   end
 
   def update
     event = Event.find(params[:id])
-    #authorize micropost
+    #authorize event
     if !event.update_attributes(update_params)
       return api_error(status: 422, errors: event.errors)
     end
@@ -46,7 +46,7 @@ class Api::V1::EventsController < Api::V1::ApiController
 
   def create_params
      params.require(:event).permit(
-       :name, :date
+       :name, :date, :user_id
      )
   end
 

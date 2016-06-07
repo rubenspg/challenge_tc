@@ -8,13 +8,13 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def show
     user = User.find(params[:id])
-    #authorize micropost
+    #authorize user
     respond_with user
   end
 
   def update
     user = User.find(params[:id])
-    #authorize micropost
+    #authorize user
     if !user.update_attributes(update_params)
       return api_error(status: 422, errors: user.errors)
     end
@@ -43,9 +43,7 @@ class Api::V1::UsersController < Api::V1::ApiController
   private
 
   def create_params
-     params.require(:user).permit(
-       :name, :email, :password
-     )
+     params.require(:user, :name, :email, :password)
   end
 
   def update_params
