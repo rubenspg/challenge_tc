@@ -1,6 +1,6 @@
 require 'json'
 
-class Api::V1::ApiController < ApplicationController
+class Api::ApiController < ApplicationController
   include Pundit
   #include ActiveHashRelation
 
@@ -10,12 +10,22 @@ class Api::V1::ApiController < ApplicationController
 
   before_action :destroy_session
 
-  #rescue_from ActiveRecord::RecordNotFound, with: :not_found!
-  #rescue_from Pundit::NotAuthorizedError, with: :unauthorized!
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found!
+  rescue_from Pundit::NotAuthorizedError, with: :unauthorized!
 
-  #attr_accessor :current_user
+  attr_accessor :current_user
 
   protected
+
+  def authenticate_user!
+    api_key = request.headers['X-Token']
+    user = User.where(api_key: api_key).first if api_key
+    if user
+      @current_user = user
+    else
+      return unauthenticated!
+    end
+  end
 
   def destroy_session
     request.session_options[:skip] = true

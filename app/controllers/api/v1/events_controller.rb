@@ -1,5 +1,5 @@
-class Api::V1::EventsController < Api::V1::ApiController
-  #before_filter :authenticate_user!
+class Api::V1::EventsController < Api::ApiController
+  before_filter :authenticate_user!, only: [:index, :show, :create, :update, :destroy]
   respond_to :json
 
   def index

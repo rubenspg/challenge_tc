@@ -1,7 +1,11 @@
-class Api::V1::UsersController < Api::V1::ApiController
+class Api::V1::UsersController < Api::ApiController
+  before_filter :authenticate_user!, only: [:index, :show, :update, :destroy]
   respond_to :json
 
   def index
+    api_key = request.headers['X-Token']
+    user = User.where(api_key: api_key).first if api_key
+    authorize user
     users = User.all
     respond_with users
   end
@@ -18,7 +22,7 @@ class Api::V1::UsersController < Api::V1::ApiController
     if !user.update_attributes(update_params)
       return api_error(status: 422, errors: user.errors)
     end
-    respond_with user
+    render json: user, status: 201
   end
 
   def destroy
