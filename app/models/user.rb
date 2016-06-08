@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
 
+  validates :name, presence: true
+  validates :email, uniqueness: true
+
   before_create do |doc|
     doc.api_key = doc.generate_api_key
   end

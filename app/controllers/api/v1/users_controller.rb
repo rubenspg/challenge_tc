@@ -43,7 +43,7 @@ class Api::V1::UsersController < Api::V1::ApiController
   private
 
   def create_params
-     params.require(:user, :name, :email, :password)
+     params.require(:user).permit(:name, :email, :password)
   end
 
   def update_params

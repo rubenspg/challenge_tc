@@ -11,11 +11,11 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "name should be present" do
-    assert_not @user.valid?
+    assert @user.valid?
   end
 
   test "email should be present" do
-    assert_not @user.valid?
+    assert @user.valid?
   end
 
   test "email validation should accept valid addresses" do
@@ -29,13 +29,13 @@ class UserTest < ActiveSupport::TestCase
 
   test "email address should be unique" do
     duplicate_user = @user.dup
-    duplicate_user.email = @user.email.upcase
+    duplicate_user.email = @user.email
     @user.save
     assert_not duplicate_user.valid?
   end
 
-  test "password should have a minimum length" do
-    @user.password = @user.password_confirmation = "a" * 5
-    assert_not @user.valid?
+  test "password should not have a minimum length" do
+    @user.password = @user.password = "a" * 5
+    assert @user.valid?
   end
 end
