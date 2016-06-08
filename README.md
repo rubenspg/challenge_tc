@@ -13,11 +13,63 @@ The following features are available:
 The current version of the API is **v1**.
 All calls should be pointing to *<hostname>/api/v1/<resource>*
 
+### API Documentation
+### User
+Below is described the documentation to interact with User entity. 
+
+#### Create
+This endpoint (http://api.<server>:3000/v1/users  - POST) will create a new User.
+
+Who can call: **Everyone**
+URL: http://api.<server>:3000/v1/users
+Method: POST
+Header:
+Payload:
+
+#### List
+This 
+
+#### Create
+
+#### Update
+
+#### Show
+
+#### Destroy
+
+
+### Event
+Below is described the documentation to interact with Event entity. 
+
+#### List
+
+#### Create
+
+#### Update
+
+#### Show
+
+#### Destroy
+
+### Guest
+Below is described the documentation to interact with Guest entity. 
+
+#### List
+
+#### Create
+
+#### Update
+
+#### Show
+
+#### Destroy
+
 ### Technologies
 
 GuestbookAPI uses the follwowing technologies:
 
 * [RubyOnRails] - Ruby - Web Framework!
+* [Pundit] - Pundit - Authorization System
 
 ### Installation
 
@@ -35,6 +87,8 @@ $ rails s
 
  - Deploy using Docker containers
  - Add a CI/CD pipeline
+ - Hide the api_token from logs
+ - Create API documentation
 
 License
 ----
@@ -43,4 +97,5 @@ This is free :)
 
 
    [RubyOnRails]: <http://rubyonrails.org/>
+   [Pundit]: <https://github.com/elabs/pundit>
    [git-repo-url]: <https://github.com/rubenspg/challlenge_tc.git>
