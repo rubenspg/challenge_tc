@@ -9,9 +9,9 @@ class User < ActiveRecord::Base
 
   def generate_api_key
     token = SecureRandom.base64.tr('+/=', 'Qrt')
-    #loop do
-  #    token = SecureRandom.base64.tr('+/=', 'Qrt')
-  #    break token unless User.exists?(api_key: token).any?
-  #  end
+  end
+
+  def make_admin!
+    self.update_attribute(:admin, true)
   end
 end

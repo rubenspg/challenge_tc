@@ -3,22 +3,20 @@ class Api::V1::UsersController < Api::ApiController
   respond_to :json
 
   def index
-    api_key = request.headers['X-Token']
-    user = User.where(api_key: api_key).first if api_key
-    authorize user
+    authorize User
     users = User.all
     respond_with users
   end
 
   def show
     user = User.find(params[:id])
-    #authorize user
+    authorize user
     respond_with user
   end
 
   def update
     user = User.find(params[:id])
-    #authorize user
+    authorize user
     if !user.update_attributes(update_params)
       return api_error(status: 422, errors: user.errors)
     end
@@ -27,17 +25,15 @@ class Api::V1::UsersController < Api::ApiController
 
   def destroy
     user = User.find(params[:id])
-
-    #authorize user
-
+    authorize user
     if !user.destroy
       return api_error(status: 500)
     end
-
-    head status: 204
+    render json: JSON("User has been removed!"), status: 204
   end
 
   def create
+    render json: JSON("User already exists with this email"), status: 409 if User.find(params[:user][:email])
     user = User.new(create_params)
     return api_error(status: 422, errors: user.errors) unless user.valid?
     user.save!

@@ -1,5 +1,5 @@
 class Api::V1::GuestsController < Api::ApiController
-  before_filter :authenticate, only: [:index, :show, :create, :update, :destroy]
+  before_filter :authenticate_user!, only: [:index, :show, :create, :update, :destroy]
   respond_to :json
 
   def index
