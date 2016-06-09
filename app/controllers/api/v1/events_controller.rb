@@ -1,5 +1,5 @@
 class Api::V1::EventsController < Api::ApiController
-  before_filter :authenticate_user!, only: [:index, :show, :create, :update, :destroy]
+  before_filter :authenticate_user!, only: [:create, :update, :destroy]
   respond_to :json
 
   def index
@@ -9,13 +9,13 @@ class Api::V1::EventsController < Api::ApiController
 
   def show
     event = Event.find(params[:id])
-    #authorize event
     respond_with event
   end
 
   def update
     event = Event.find(params[:id])
-    #authorize event
+    user = event.user
+    return render_error unless authorized?(user)
     if !event.update_attributes(update_params)
       return api_error(status: 422, errors: event.errors)
     end
@@ -24,8 +24,8 @@ class Api::V1::EventsController < Api::ApiController
 
   def destroy
     event = Event.find(params[:id])
-
-    #authorize event
+    user = event.user
+    return render_error unless authorized?(user)
 
     if !event.destroy
       return api_error(status: 500)
@@ -35,8 +35,9 @@ class Api::V1::EventsController < Api::ApiController
   end
 
   def create
+    render_error unless requester
     event = Event.new(create_params)
-    event.user = User.find(params["user_id"])
+    event.user = requester
     return api_error(status: 422, errors: event.errors) unless event.valid?
     event.save!
     render json: event, status: 201

@@ -3,20 +3,20 @@ class Api::V1::UsersController < Api::ApiController
   respond_to :json
 
   def index
-    authorize User
+    return render_error unless authorized?
     users = User.all
     respond_with users
   end
 
   def show
     user = User.find(params[:id])
-    authorize user
+    return render_error unless authorized?(user)
     respond_with user
   end
 
   def update
     user = User.find(params[:id])
-    authorize user
+    return render_error unless authorized?(user)
     if !user.update_attributes(update_params)
       return api_error(status: 422, errors: user.errors)
     end
@@ -25,7 +25,7 @@ class Api::V1::UsersController < Api::ApiController
 
   def destroy
     user = User.find(params[:id])
-    authorize user
+    return render_error unless authorized?(user)
     if !user.destroy
       return api_error(status: 500)
     end
@@ -43,7 +43,7 @@ class Api::V1::UsersController < Api::ApiController
   private
 
   def create_params
-     params.require(:user).permit(:name, :email, :password)
+     params.require(:user).permit(:name, :email, :password, :admin)
   end
 
   def update_params

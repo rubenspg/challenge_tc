@@ -17,9 +17,24 @@ class Api::ApiController < ApplicationController
 
   protected
 
+  def render_error
+    return render json: { error: 'Not authorized. Must be owner or admin.' }, status: 403
+  end
+
+  def requester
+    User.where("api_key = ?", request.headers['X-Token']).first
+  end
+
+  def authorized?(owner=nil)
+    return true if requester.admin?
+    return false if owner.nil?
+    return true if requester.id == owner.id
+  end
+
   def authenticate_user!
-    api_key = request.headers['X-Token']
-    user = User.where(api_key: api_key).first if api_key
+    token = request.headers['X-Token']
+    invalid_token! unless token
+    user = User.where("api_key = ?", token).first
     if user
       @current_user = user
     else
@@ -40,12 +55,16 @@ class Api::ApiController < ApplicationController
     render json: { error: 'not authorized' }, status: 403
   end
 
+  def invalid_token!
+    render json: { error: 'Missing token or invalid' }, status: 403
+  end
+
   def invalid_resource!(errors = [])
     api_error(status: 422, errors: errors)
   end
 
   def not_found!
-    return api_error(status: 404, errors: 'Not found')
+    render json: { error: 'not found' }, status: 404
   end
 
   def api_error(status: 500, errors: [])

@@ -1,5 +1,5 @@
 class Api::V1::GuestsController < Api::ApiController
-  before_filter :authenticate_user!, only: [:index, :show, :create, :update, :destroy]
+  before_filter :authenticate_user!, only: [:create, :update, :destroy]
   respond_to :json
 
   def index
@@ -9,6 +9,8 @@ class Api::V1::GuestsController < Api::ApiController
 
   def create
     guest = Guest.new(create_params)
+    user = guest.event.user
+    return render_error unless authorized?(user)
     return api_error(status: 422, errors: guest.errors) unless guest.valid?
     guest.save!
     render json: guest, status: 201
@@ -22,7 +24,8 @@ class Api::V1::GuestsController < Api::ApiController
 
   def update
     guest = Guest.find(params[:id])
-    #authorize guest
+    user = guest.event.user
+    return render_error unless authorized?(user)
     if !guest.update_attributes(update_params)
       return api_error(status: 422, errors: guest.errors)
     end
@@ -31,9 +34,8 @@ class Api::V1::GuestsController < Api::ApiController
 
   def destroy
     guest = Guest.find(params[:id])
-
-    #authorize guest
-
+    user = guest.event.user
+    return render_error unless authorized?(user)
     if !guest.destroy
       return api_error(status: 500)
     end
@@ -44,9 +46,7 @@ class Api::V1::GuestsController < Api::ApiController
   private
 
   def create_params
-     params.require(:guest).permit(
-       :name, :guest_id
-     )
+     params.require(:guest).permit(:name)
   end
 
   def update_params
