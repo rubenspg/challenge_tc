@@ -17,52 +17,147 @@ All calls should be pointing to *<hostname>/api/v1/<resource>*
 ### User
 Below is described the documentation to interact with User entity. 
 
-#### Create
-This endpoint (http://api.<server>:3000/v1/users  - POST) will create a new User.
-
-Who can call: **Everyone**
-URL: http://api.<server>:3000/v1/users
-Method: POST
-Header:
-Payload:
-
 #### List
-This 
+Following you can see the details on how to list of Users.
+
+- **Who can call:** User admin
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** GET 
+- **Header:** Content-Type: application/json X-Token: USER_TOKEN
+- **Payload:**
 
 #### Create
+Following you can see the details on how to create a new User. 
+Note that you will receive the token when you create your user.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** Content-Type: application/json X-Token: USER_TOKEN
+- **Payload:** {"user": {"name": "User_AAA", "email": "rubens@github.com", "password": "sss", "admin": true}}
 
 #### Update
+Following you can see the details on how to update a User.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 #### Show
+Following you can see the details on how to show a User.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 #### Destroy
+Following you can see the details on how to destroy a User.
 
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 ### Event
 Below is described the documentation to interact with Event entity. 
 
 #### List
+Following you can see the details on how to list of Events.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 #### Create
+Following you can see the details on how to create a new Event.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 #### Update
+Following you can see the details on how to create a Event.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 #### Show
+Following you can see the details on how to create a Event.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 #### Destroy
+Following you can see the details on how to create a Event.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 ### Guest
 Below is described the documentation to interact with Guest entity. 
 
 #### List
+Following you can see the details on how to create of Guests.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 #### Create
+Following you can see the details on how to create a new Guest.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 #### Update
+Following you can see the details on how to create a Guest.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 #### Show
+Following you can see the details on how to create a Guest.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 #### Destroy
+Following you can see the details on how to create a Guest.
+
+- **Who can call:** *Everyone*
+- **URL:** http://api.<server>:3000/v1/users
+- **Method:** POST 
+- **Header:** 
+- **Payload:**
 
 ### Technologies
 
@@ -89,6 +184,8 @@ $ rails s
  - Add a CI/CD pipeline
  - Hide the api_token from logs
  - Create API documentation
+ - API to set User as Admin
+ - API to regenerate api_tokens
 
 License
 ----
