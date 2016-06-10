@@ -26,14 +26,14 @@ class Api::V1::UsersController < Api::ApiController
   def destroy
     user = User.find(params[:id])
     return render_error unless authorized?(user)
-    if !user.destroy
+    unless user.destroy
       return api_error(status: 500)
     end
-    render json: JSON("User has been removed!"), status: 204
+    render json: JSON('User has been removed!'), status: 204
   end
 
   def create
-    render json: JSON("User already exists with this email"), status: 409 if User.find(params[:user][:email])
+    render json: JSON('User already exists with this email'), status: 409 if User.find(params[:user][:email])
     user = User.new(create_params)
     return api_error(status: 422, errors: user.errors) unless user.valid?
     user.save!

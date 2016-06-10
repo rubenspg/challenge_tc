@@ -19,7 +19,6 @@ class Api::V1::GuestsController < Api::ApiController
 
   def show
     guest = Guest.find(params[:id])
-    #authorize guest
     respond_with guest
   end
 
@@ -27,7 +26,7 @@ class Api::V1::GuestsController < Api::ApiController
     guest = Guest.find(params[:id])
     user = guest.event.user
     return render_error unless authorized?(user)
-    if !guest.update_attributes(update_params)
+    unless guest.update_attributes(update_params)
       return api_error(status: 422, errors: guest.errors)
     end
     respond_with guest
@@ -37,7 +36,7 @@ class Api::V1::GuestsController < Api::ApiController
     guest = Guest.find(params[:id])
     user = guest.event.user
     return render_error unless authorized?(user)
-    if !guest.destroy
+    unless guest.destroy
       return api_error(status: 500)
     end
 

@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   end
 
   def generate_api_key
-    token = SecureRandom.base64.tr('+/=', 'Qrt')
+    SecureRandom.base64.tr('+/=', 'Qrt')
   end
 
   def make_admin!

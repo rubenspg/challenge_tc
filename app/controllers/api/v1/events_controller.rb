@@ -16,7 +16,7 @@ class Api::V1::EventsController < Api::ApiController
     event = Event.find(params[:id])
     user = event.user
     return render_error unless authorized?(user)
-    if !event.update_attributes(update_params)
+    unless event.update_attributes(update_params)
       return api_error(status: 422, errors: event.errors)
     end
     respond_with event
@@ -27,7 +27,7 @@ class Api::V1::EventsController < Api::ApiController
     user = event.user
     return render_error unless authorized?(user)
 
-    if !event.destroy
+    unless event.destroy
       return api_error(status: 500)
     end
 
