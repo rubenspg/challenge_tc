@@ -1,9 +1,6 @@
 require 'json'
 
 class Api::ApiController < ApplicationController
-  include Pundit
-  #include ActiveHashRelation
-
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
@@ -11,7 +8,6 @@ class Api::ApiController < ApplicationController
   before_action :destroy_session
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found!
-  rescue_from Pundit::NotAuthorizedError, with: :unauthorized!
 
   attr_accessor :current_user
 

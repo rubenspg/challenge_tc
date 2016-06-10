@@ -9,6 +9,7 @@ class Api::V1::GuestsController < Api::ApiController
 
   def create
     guest = Guest.new(create_params)
+    guest.event = Event.find(params[:event_id]) if params[:event_id]
     user = guest.event.user
     return render_error unless authorized?(user)
     return api_error(status: 422, errors: guest.errors) unless guest.valid?
@@ -46,7 +47,7 @@ class Api::V1::GuestsController < Api::ApiController
   private
 
   def create_params
-     params.require(:guest).permit(:name)
+     params.require(:guest).permit(:name, :event_id)
   end
 
   def update_params
